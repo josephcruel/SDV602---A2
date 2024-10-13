@@ -4,6 +4,9 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 # Function to draw a matplotlib figure onto a PySimpleGUI canvas
 def draw_figure(canvas, figure):
+    """
+    Draw a matplotlib figure onto a PySimpleGUI canvas
+    """
     figure_canvas_agg = FigureCanvasTkAgg(figure, canvas)
     figure_canvas_agg.draw()
     figure_canvas_agg.get_tk_widget().pack(side='top', fill='both', expand=1)
@@ -11,6 +14,9 @@ def draw_figure(canvas, figure):
 
 # The bar chart function - got from ChartExamples.py
 def bar_chart():
+    """
+    A bar chart showing the number of visitors 
+    """
     years = [str(year) for year in range(2010, 2021)]
     visitors = [1241, 50927, 162242, 222093, 
                 665004, 2071987, 2460407, 3799215, 
@@ -25,6 +31,9 @@ def bar_chart():
 
 # The line plot function - got from ChartExamples.py
 def line_plot():
+    """
+    A line plot that have set points.
+    """
     plt.figure()  
     plt.plot([-1, -4.5, 16, 23])
     plt.title("Line Chart Example")
@@ -33,6 +42,9 @@ def line_plot():
 
 # The pie chart function - got from ChartExamples.py
 def pie_chart1():
+    """
+    A pie chart with different programming languages.
+    """
     labels = 'C', 'Python', 'Java', 'C++', 'C#'
     sizes = [13.38, 11.87, 11.74, 7.81, 4.41]
     explode = (0, 0.1, 0, 0, 0)  # only "explode" the 2nd slice (i.e. 'Python')
@@ -49,6 +61,9 @@ def pie_chart1():
 
 # Function to create the window layout with a chart placeholder
 def create_window(des_name):
+    """
+    Main function that sets up the Data Explorer Screens (DES) and handles window navigation.
+    """
     
     # Chart and buttons are on the left side of the window
     left_display = [
@@ -85,9 +100,18 @@ def main():
     }
 
     # Create the bar chart to display in the first window (DES 1)
-    figure_agg1 = draw_figure(windows["DES 1"]['-CANVAS-'].TKCanvas, bar_chart())  # Bar chart for DES 1
-    figure_agg2 = draw_figure(windows["DES 2"]['-CANVAS-'].TKCanvas, pie_chart1())  # Pie chart for DES 2
-    figure_agg3 = draw_figure(windows["DES 3"]['-CANVAS-'].TKCanvas, line_plot())  # Line chart for DES 3
+    figure_agg1 = draw_figure(
+        windows["DES 1"]['-CANVAS-'].TKCanvas, 
+        bar_chart()
+    )  # Bar chart for DES 1
+    figure_agg2 = draw_figure(
+        windows["DES 2"]['-CANVAS-'].TKCanvas, 
+        pie_chart1()
+    )  # Pie chart for DES 2
+    figure_agg3 = draw_figure(
+        windows["DES 3"]['-CANVAS-'].TKCanvas,
+        line_plot()
+    )  # Line chart for DES 3
 
     # Hide all windows except the first 
     windows["DES 2"].hide()
@@ -108,7 +132,9 @@ def main():
         # Move to next DES window
         if event == 'Next':
             current_window.hide()  # Hide the current window
-            current_index = (current_index + 1) % len(des_order)  # Move to the next window, DES 3 will return back to DES 1
+            current_index = (
+                current_index + 1
+            ) % len(des_order)  # Move to the next window, DES 3 will return back to DES 1
             current_window = windows[des_order[current_index]]
             current_window.un_hide()  # Show the next window
 
